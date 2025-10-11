@@ -1,23 +1,67 @@
+import { ProductList } from '../../features/products';
+import { useGetProductsQuery } from '../../services/api/productsApi';
+import type { Product } from '../../types/product';
+
 export function HomePage() {
+  const { data: products, isLoading, error, isError } = useGetProductsQuery();
+  
+  const handleAddToCart = (product: Product) => {
+    // TODO: Implement add to cart functionality
+    console.log('Adding to cart:', product);
+  };
+
+  // Debug information
+  console.log('Products data:', products);
+  console.log('Loading:', isLoading);
+  console.log('Error:', error);
+
   return (
     <div className="px-4 py-6 sm:px-0">
-      <div className="border-4 border-dashed border-gray-200 rounded-lg h-96 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-8 mb-8 text-white">
+        <div className="max-w-3xl">
+          <h1 className="text-4xl font-bold mb-4">
             Welcome to ComStore
           </h1>
-          <p className="text-lg text-gray-600 mb-8">
-            Your one-stop destination for all your needs
+          <p className="text-xl mb-6 opacity-90">
+            Discover amazing products at unbeatable prices
           </p>
-          <div className="space-x-4">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Get Started
+          <div className="flex space-x-4">
+            <button className="bg-white text-blue-600 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition-colors">
+              Shop Now
             </button>
-            <button className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded">
+            <button className="border-2 border-white text-white font-bold py-3 px-6 rounded-lg hover:bg-white hover:text-blue-600 transition-colors">
               Learn More
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Debug Info */}
+      {isError && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <strong>Debug Info:</strong>
+          <pre className="mt-2 text-sm">
+            {JSON.stringify({ error, isError, isLoading }, null, 2)}
+          </pre>
+        </div>
+      )}
+
+      {/* Products Section */}
+      <div className="mb-8">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-900">Featured Products</h2>
+          <div className="text-sm text-gray-600">
+            {products && `${products.length} products available`}
+          </div>
+        </div>
+        
+        <ProductList
+          products={products || []}
+          isLoading={isLoading}
+          error={isError ? 'Failed to load products' : undefined}
+          onAddToCart={handleAddToCart}
+        />
       </div>
     </div>
   );
