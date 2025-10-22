@@ -4,6 +4,7 @@ import ErrorPage from "../ErrorPage";
 import { HomePage } from "./routes/HomePage";
 import { AboutPage } from "./routes/AboutPage";
 import { ContactPage } from "./routes/ContactPage";
+import { ProductDetailPage } from "./routes/ProductDetailPage";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +28,11 @@ export const router = createBrowserRouter([
         path: "contact",
         element: <ContactPage />,
       },
+      {
+        path: "product/:id",
+        element: <ProductDetailPage />,
+      },
+
       // เพิ่ม path ใหม่ได้ที่นี่
       {
         path: "products",

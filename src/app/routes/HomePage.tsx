@@ -1,12 +1,15 @@
 import { ProductList } from '../../features/products';
 import { useGetProductsQuery } from '../../services/api/productsApi';
 import type { Product } from '../../types/product';
+import { useCart } from '../../components/CartContext';
 
 export function HomePage() {
   const { data: products, isLoading, error, isError } = useGetProductsQuery();
+  const { addItem } = useCart();
   
   const handleAddToCart = (product: Product) => {
     // TODO: Implement add to cart functionality
+    addItem(product, 1); 
     console.log('Adding to cart:', product);
   };
 
